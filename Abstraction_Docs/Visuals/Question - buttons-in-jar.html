@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buttons in Jar - Refined Abstraction Levels</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .level {
+            font-weight: bold;
+        }
+        .score-bg-0 { background-color: #FFFFFF; }
+        .score-bg-1 { background-color: #E6F3FF; }
+        .score-bg-2 { background-color: #CCE7FF; }
+        .score-bg-3 { background-color: #B3DBFF; }
+        .score-bg-4 { background-color: #99CFFF; }
+        .score-bg-5 { background-color: #80C3FF; }
+        .score-bg-6 { background-color: #66B7FF; }
+        .score-bg-7 { background-color: #4DABFF; }
+    </style>
+</head>
+<body>
+    <h1>Buttons in Jar - Refined Abstraction Levels</h1>
+    <table>
+        <tr>
+            <th>Level</th>
+            <th>Ideal Representation</th>
+            <th>Actual Question / Sample</th>
+            <th>Score</th>
+            <th>Variable Entities</th>
+        </tr>
+        <tr>
+            <td class="level">Raw Question</td>
+            <td class="score-bg-0">N/A</td>
+            <td>A jar contains buttons of four different colours. There are twice as many yellow as green, twice as many red as yellow, and twice as many blue as red. What is the probability of taking from the jar: a blue button; a red button; a yellow button; a green button? You may assume that you are only taking one button at a time and replacing it in the jar before selecting the next one.</td>
+            <td class="score-bg-1">1.2</td>
+            <td>
+                Colors: green, yellow, red, blue<br>
+                Ratios: 1:2:4:8<br>
+                Action: taking one button at a time<br>
+                Replacement: Yes
+            </td>
+        </tr>
+        <tr>
+            <td class="level">Level 0 (Concrete)</td>
+            <td class="score-bg-0">A jar contains 1 green button, 2 yellow buttons, 4 red buttons, and 8 blue buttons. What is the probability of taking from the jar: a blue button; a red button; a yellow button; a green button? You may assume that you are only taking one button at a time and replacing it in the jar before selecting the next one.</td>
+            <td>A jar contains 1 green button, 2 yellow buttons, 4 red buttons, and 8 blue buttons. What is the probability of selecting each color button?</td>
+            <td class="score-bg-0">0.2</td>
+            <td>
+                Green buttons: 1<br>
+                Yellow buttons: 2<br>
+                Red buttons: 4<br>
+                Blue buttons: 8<br>
+                Total buttons: 15
+            </td>
+        </tr>
+        <tr>
+            <td class="level">Level 1 (Basic Abstraction)</td>
+            <td class="score-bg-1">A jar contains A green buttons, B yellow buttons, C red buttons, and D blue buttons. What is the probability of taking from the jar: a blue button; a red button; a yellow button; a green button? You may assume that you are only taking one button at a time and replacing it in the jar before selecting the next one.</td>
+            <td>A jar contains A green buttons, B yellow buttons, C red buttons, and D blue buttons, where B = 2A, C = 2B, and D = 2C. Calculate the probability of selecting each color button.</td>
+            <td class="score-bg-1">1.5</td>
+            <td>
+                A: Number of green buttons<br>
+                B: Number of yellow buttons (2A)<br>
+                C: Number of red buttons (4A)<br>
+                D: Number of blue buttons (8A)<br>
+                Total buttons: 15A
+            </td>
+        </tr>
+        <tr>
+            <td class="level">Level 2 (Structural Abstraction)</td>
+            <td class="score-bg-2">A container holds items of N different types, with quantities following a geometric progression. What is the probability of selecting an item of each type? You may assume that you are only selecting one item at a time and replacing it in the container before selecting the next one.</td>
+            <td>A container holds items of N types, with quantities following a geometric sequence with first term a and common ratio r. Calculate the probability of selecting each item type.</td>
+            <td class="score-bg-2">2.3</td>
+            <td>
+                N: Number of item types (4)<br>
+                r: Common ratio of geometric progression (2)<br>
+                a: First term of geometric progression (1)<br>
+                Total items: a * (1 - r^N) / (1 - r) = 15
+            </td>
+        </tr>
+        <tr>
+            <td class="level">Level 3 (Functional Abstraction)</td>
+            <td class="score-bg-3">A system contains multiple categories of elements with defined quantitative relationships. Calculate the probability of selecting an element from each category, assuming replacement after each selection.</td>
+            <td>Given a set of categories C and a quantity function f(c) for c ∈ C, determine the probability P(c) of selecting an element from each category c, assuming replacement after selection.</td>
+            <td class="score-bg-3">3.4</td>
+            <td>
+                C: Set of distinct element types {c1, c2, c3, c4}<br>
+                f(c): Quantity function, where f(ci) = 2^(i-1) for i = 1 to 4<br>
+                P(c): Probability function, where P(c) = f(c) / Σf(c) for all c ∈ C
+            </td>
+        </tr>
+        <tr>
+            <td class="level">Level 4 (Conceptual Abstraction)</td>
+            <td class="score-bg-4">A finite set of elements with a defined distribution and selection process. Determine the probability of selecting elements from different subsets of the set.</td>
+            <td>Consider a finite set S with a partition P and a distribution function D. Analyze the probability of element selection from each subset of P under a given selection process.</td>
+            <td class="score-bg-4">4.1</td>
+            <td>
+                S: Finite set of elements<br>
+                P: Partition of S into subsets<br>
+                D: Distribution function defining element allocation to subsets<br>
+                Selection process: Rules for element choice and replacement
+            </td>
+        </tr>
+        <tr>
+            <td class="level">Level 5 (Meta-Abstract)</td>
+            <td class="score-bg-5">A system for dynamically defining and analyzing quantitative relationships between categorized elements, including probability calculations for element selection under various conditions.</td>
+            <td>Design a meta-system M that allows for the dynamic creation and analysis of categorized element sets, their relationships, and probabilistic selection processes.</td>
+            <td class="score-bg-5">5.0</td>
+            <td>
+                M: Meta-system<br>
+                E: Element definition function<br>
+                C: Category creation function<br>
+                R: Relationship definition function<br>
+                P: Probability calculation function<br>
+                Γ: Condition specification function
+            </td>
+        </tr>
+        <tr>
+            <td class="level">Level 6 (Universal Abstract)</td>
+            <td class="score-bg-6">A generalized system for modeling and analyzing discrete or continuous distributions in any domain, capable of representing and solving probabilistic scenarios across various fields of study.</td>
+            <td>Formulate a universal framework U for representing and analyzing probabilistic distributions and selection processes across arbitrary domains, accommodating both discrete and continuous cases.</td>
+            <td class="score-bg-6">5.8</td>
+            <td>
+                U: Universal framework<br>
+                D: Domain specification function<br>
+                T: Distribution type (discrete/continuous)<br>
+                V: Variable definition function<br>
+                R: Relationship modeling function<br>
+                A: Analysis method selection function
+            </td>
+        </tr>
+        <tr>
+            <td class="level">Level 7 (Philosophical Abstract)</td>
+            <td class="score-bg-7">An exploration of the nature of probability, categorization, and measurement in defining our understanding of reality, questioning the fundamental concepts of chance, choice, and the quantification of possibility.</td>
+            <td>Investigate the ontological and epistemological foundations of probability, categorization, and measurement. Explore how these concepts shape our perception of reality and the limits of knowledge in quantifying possibilities.</td>
+            <td class="score-bg-7">6.9</td>
+            <td>
+                Ontological foundations of probability<br>
+                Epistemological limits of categorization<br>
+                Phenomenology of measurement<br>
+                Metaphysics of possibility and actuality<br>
+                Cognitive frameworks for understanding chance and choice
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

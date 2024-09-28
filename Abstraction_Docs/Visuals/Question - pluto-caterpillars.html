@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pluto Caterpillars - Abstraction Levels (Further Revised)</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #f5f5f5; }
+        .score { font-weight: bold; }
+        .score-0 { color: #ff4136; }
+        .score-1 { color: #ff851b; }
+        .score-2 { color: #ffdc00; }
+        .score-3 { color: #2ecc40; }
+        .score-4 { color: #0074d9; }
+        .score-5 { color: #001f3f; }
+        .score-6 { color: #85144b; }
+        .score-7 { color: #b10dc9; }
+    </style>
+</head>
+<body>
+    <h1>Pluto Caterpillars - Abstraction Levels (Further Revised)</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Level</th>
+                <th>Ideal Representation</th>
+                <th>Actual Question / Sample</th>
+                <th>Score</th>
+                <th>Variable Entities</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Raw Question</td>
+                <td>N/A</td>
+                <td>The planet Pluto (radius 1180 km) is populated by three species of purple caterpillar. Studies have established the following facts:
+                    • A line of 5 mauve caterpillars is as long as a line of 7 violet caterpillars.
+                    • A line of 3 lavender caterpillars and 1 mauve caterpillar is as long as a line of 8 violet caterpillars.
+                    • A line of 5 lavender caterpillars, 5 mauve caterpillars and 2 violet caterpillars is 1m long in total.
+                    • A lavender caterpillar takes 10 s to crawl the length of a violet caterpillar.
+                    • Violet and mauve caterpillars both crawl twice as fast as lavender caterpillars.
+                    How long would it take a mauve caterpillar to crawl around the equator of Pluto?</td>
+                <td class="score score-0">0.0</td>
+                <td>Planet: Pluto<br>
+                    Caterpillar species: lavender, mauve, violet<br>
+                    Relationships: length, speed<br>
+                    Task: Calculate travel time</td>
+            </tr>
+            <tr>
+                <td>Level 0 (Concrete)</td>
+                <td>Pluto has a radius of 1180 km. There are three types of caterpillars: lavender, mauve, and violet. Their lengths and speeds are related as described. Calculate how long it takes a mauve caterpillar to crawl around Pluto's equator.</td>
+                <td>Given Pluto's radius of 1180 km and the length and speed relationships between lavender, mauve, and violet caterpillars, determine the time for a mauve caterpillar to circumnavigate Pluto's equator.</td>
+                <td class="score score-0">0.2</td>
+                <td>Pluto radius: 1180 km<br>
+                    Caterpillar types: lavender, mauve, violet<br>
+                    Length and speed relationships as given</td>
+            </tr>
+            <tr>
+                <td>Level 1 (Basic Abstraction)</td>
+                <td>A planet P has a radius R. It has three species of caterpillars: A, B, and C. Their lengths and speeds are related by equations E1, E2, E3, E4, and E5. Calculate how long it takes a B caterpillar to crawl around P's equator.</td>
+                <td>Planet P (radius R km) has caterpillar species A, B, and C. Given length relations E1, E2, E3 and speed relations E4, E5 between the species, calculate the time for species B to crawl around P's equator.</td>
+                <td class="score score-1">1.1</td>
+                <td>R: Planet radius<br>
+                    A, B, C: Caterpillar species<br>
+                    E1-E5: Relationship equations</td>
+            </tr>
+            <tr>
+                <td>Level 2 (Structural Abstraction)</td>
+                <td>A spherical body contains N species with relative size and speed relationships. Calculate the time for one species to traverse the body's circumference.</td>
+                <td>For a spherical body of radius R containing N species with defined relative sizes S and speeds V, compute the time T for species X to complete one circumnavigation.</td>
+                <td class="score score-2">2.1</td>
+                <td>R: Body radius<br>
+                    N: Number of species<br>
+                    S: Set of size relationships<br>
+                    V: Set of speed relationships<br>
+                    X: Target species<br>
+                    T: Traversal time</td>
+            </tr>
+            <tr>
+                <td>Level 3 (Functional Abstraction)</td>
+                <td>Given a set of entities with defined size and speed functions, calculate the time for one entity to traverse a circular path of given length.</td>
+                <td>For a set E of entities with size function f(e) and speed function g(e), e ∈ E, and a circular path of length L, determine the traversal time T(x) for entity x ∈ E.</td>
+                <td class="score score-3">3.1</td>
+                <td>E: Set of entities<br>
+                    f(e): Size function<br>
+                    g(e): Speed function<br>
+                    L: Path length<br>
+                    T(e): Traversal time function<br>
+                    x: Specific entity</td>
+            </tr>
+            <tr>
+                <td>Level 4 (Conceptual Abstraction)</td>
+                <td>A system of interrelated entities with varying attributes traversing a closed path. Determine the traversal time based on the relationships and path characteristics.</td>
+                <td>Analyze system S of entities with attribute set A = {A1, ..., An} traversing closed path P. Calculate traversal time T(e) for entity e based on relationship function R and path properties.</td>
+                <td class="score score-4">4.1</td>
+                <td>S: System of entities<br>
+                    A: Set of attributes<br>
+                    P: Path characteristics<br>
+                    R: Relationship function<br>
+                    T(e): Traversal time function<br>
+                    e: Specific entity</td>
+            </tr>
+            <tr>
+                <td>Level 5 (Meta-Abstract)</td>
+                <td>A framework for defining and analyzing systems of entities with customizable attributes and relationships, capable of calculating various performance metrics.</td>
+                <td>Design meta-system M for creating and analyzing entity systems with dynamic attributes A, relationships R, and performance metrics P under conditions C. Implement entity definition E and system analysis function F.</td>
+                <td class="score score-5">5.2</td>
+                <td>M: Meta-system<br>
+                    E: Entity definition function<br>
+                    A: Attribute creation function<br>
+                    R: Relationship definition function<br>
+                    P: Performance metric set<br>
+                    C: Condition set<br>
+                    F: System analysis function</td>
+            </tr>
+            <tr>
+                <td>Level 6 (Universal Abstract)</td>
+                <td>A universal framework for modeling and analyzing relative motion and performance of arbitrary entities in any defined space or context.</td>
+                <td>Formulate universal framework U for entity motion and performance across domains D and contexts C. Implement domain specification Φ, entity modeling Ψ, space-time definition Ω, and analysis selection Δ functions.</td>
+                <td class="score score-6">6.1</td>
+                <td>U: Universal framework<br>
+                    D: Set of possible domains<br>
+                    C: Set of possible contexts<br>
+                    Φ: Domain specification function<br>
+                    Ψ: Entity modeling function<br>
+                    Ω: Space-time definition function<br>
+                    Δ: Analysis method selection function</td>
+            </tr>
+            <tr>
+                <td>Level 7 (Philosophical Abstract)</td>
+                <td>An exploration of the nature of relative motion, measurement, and the conceptualization of entities and their interactions in defining our understanding of reality.</td>
+                <td>Investigate ontological foundations of motion (M), measurement (N), and entity interaction (I). Explore their impact on reality perception (R), knowledge limits (K), and cognitive frameworks (F). Examine implications for space (S), time (T), and causality (C) concepts.</td>
+                <td class="score score-7">7.0</td>
+                <td>M: Motion conceptualization<br>
+                    N: Measurement framework<br>
+                    I: Interaction model<br>
+                    R: Reality perception function<br>
+                    K: Knowledge limitation function<br>
+                    F: Cognitive framework model<br>
+                    S: Space conceptualization<br>
+                    T: Time conceptualization<br>
+                    C: Causality model</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
