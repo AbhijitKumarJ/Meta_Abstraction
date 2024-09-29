@@ -11,7 +11,7 @@ class AbstractionLevel(BaseModel):
     ideal_representation: str
     generated_question: str
     score: float
-    variables: Dict[str, str]
+    variables: str
 
 class AbstractionResponse(BaseModel):
     question_id: int

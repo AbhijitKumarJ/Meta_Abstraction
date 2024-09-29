@@ -18,7 +18,7 @@ Abstraction Levels:
 For level {level}, provide:
 1. Ideal Representation: A description of how the problem should be represented at this level.
 2. Generated Question: An abstract version of the original question at this level.
-3. Score: A float between 0 and 7 indicating how well the generated question matches the ideal representation.
+3. Score: A float between 0 and 7 indicating where the generated question lands on this scale of 0 to 7 in which ideally it should be close to the ideal representation.
 4. Variables: A string which may or may not contain a dictionary of key variables and their sample values relevant to this abstraction level.
 
 Format your response as a JSON object with the following structure:

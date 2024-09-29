@@ -22,7 +22,7 @@ API_MODEL = os.environ.get('GROQ_MODEL', "llama-3.1-8b-instant")
 
 router = APIRouter()
 
-MAX_LEVELS = 2
+MAX_LEVELS = 4
 MAX_REQUESTS_PER_MINUTE = 10
 request_timestamps: Deque[float] = deque()  # Use a deque for efficient queue operations
 
@@ -81,9 +81,9 @@ async def generate_abstractions(question: Question):
 
                     # Parse the 'variables' field into a dictionary
                     try:
-                        variables = json.loads(parsed_response['variables'])
+                        variables = parsed_response['variables'] #json.loads(parsed_response['variables'])
                     except (KeyError, TypeError, json.JSONDecodeError):
-                        variables = {}  # Or handle the error as needed, e.g., set a default value
+                        variables = '' #{}  # Or handle the error as needed, e.g., set a default value
 
                 except json.JSONDecodeError:
                     # Handle cases where the response isn't valid JSON.
@@ -99,10 +99,34 @@ async def generate_abstractions(question: Question):
                 )
                 levels.append(abstraction)
 
-                # ... (database logging code remains unchanged)
+                with get_db_connection() as conn:
+                    cursor = conn.cursor()
+                    # Log raw response
+                    cursor.execute("""
+                        INSERT INTO RawRequestResponseLog 
+                        (question_id, level_number, request_type, input_prompt, raw_response, status) 
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    """, (question_id, level, 'abstraction', prompt, response_content, 'success'))
+
+                    # Log detailed abstraction
+                    cursor.execute("""
+                        INSERT INTO DetailedAbstractions 
+                        (question_id, level_number, ideal_representation, generated_question, score, variables) 
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    """, (question_id, level, abstraction.ideal_representation, abstraction.generated_question, 
+                          abstraction.score, abstraction.variables))
+
+                    conn.commit()
 
             except Exception as e:
-                print(e)
-                # ... (error handling and logging code remains unchanged)
+                # Log error
+                with get_db_connection() as conn:
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        INSERT INTO RawRequestResponseLog 
+                        (question_id, level_number, request_type, input_prompt, raw_response, status) 
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    """, (question_id, level, 'abstraction', prompt, str(e), 'failure'))
+                    conn.commit()
 
     return AbstractionResponse(question_id=question_id, levels=levels)
