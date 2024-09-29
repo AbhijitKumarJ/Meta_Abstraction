@@ -95,6 +95,8 @@ async def generate_abstractions(question: Question):
                 # ... (database logging code remains unchanged)
 
             except Exception as e:
+                print(e)
                 # ... (error handling and logging code remains unchanged)
 
     return AbstractionResponse(question_id=question_id, levels=levels)
+
