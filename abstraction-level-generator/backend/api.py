@@ -78,8 +78,15 @@ async def generate_abstractions(question: Question):
                 try:
                     # Attempt to parse the response as JSON
                     parsed_response = json.loads(response_content)
+
+                    # Parse the 'variables' field into a dictionary
+                    try:
+                        variables = json.loads(parsed_response['variables'])
+                    except (KeyError, TypeError, json.JSONDecodeError):
+                        variables = {}  # Or handle the error as needed, e.g., set a default value
+
                 except json.JSONDecodeError:
-                    # Handle cases where the response isn't valid JSON.  This may require further debugging and refinement based on the actual API behavior.
+                    # Handle cases where the response isn't valid JSON.
                     raise HTTPException(status_code=500, detail=f"Invalid JSON response from API: {response_content}")
 
 
@@ -88,7 +95,7 @@ async def generate_abstractions(question: Question):
                     ideal_representation=parsed_response['ideal_representation'],
                     generated_question=parsed_response['generated_question'],
                     score=parsed_response['score'],
-                    variables=parsed_response['variables']
+                    variables=variables # Assign the parsed variables dictionary
                 )
                 levels.append(abstraction)
 
@@ -99,4 +106,3 @@ async def generate_abstractions(question: Question):
                 # ... (error handling and logging code remains unchanged)
 
     return AbstractionResponse(question_id=question_id, levels=levels)
-
